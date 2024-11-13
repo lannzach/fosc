@@ -10,7 +10,7 @@ Fosc {
     classvar <>xmlVersion="4.0";
     /* --------------------------------------------------------------------------------------------------------
     • *lilypondVersion
-    
+
     Fosc.lilypondVersion;
     -------------------------------------------------------------------------------------------------------- */
     *lilypondVersion {
@@ -23,13 +23,13 @@ Fosc {
     • *lilypondPath
 
     Fosc.lilypondPath;
-    -------------------------------------------------------------------------------------------------------- */ 
+    -------------------------------------------------------------------------------------------------------- */
     *lilypondPath {
         if (lilypondPath.isNil || { File.exists(lilypondPath).not }) {
             error("LilyPond executable not found at: %.".format(lilypondPath));
             ^nil;
         } {
-            ^lilypondPath;  
+            ^lilypondPath;
         };
     }
     /* --------------------------------------------------------------------------------------------------------
@@ -38,7 +38,7 @@ Fosc {
     The executable path should be set in the user startup file, e.g.:
 
     Fosc.lilypondPath = "/Applications/LilyPond.app/Contents/Resources/bin/lilypond";
-    -------------------------------------------------------------------------------------------------------- */ 
+    -------------------------------------------------------------------------------------------------------- */
     /* --------------------------------------------------------------------------------------------------------
     • *outputDirectory
 
@@ -46,7 +46,7 @@ Fosc {
     -------------------------------------------------------------------------------------------------------- */
     *outputDirectory {
         var dir;
-        dir = "%/fosc-output".format(Platform.userConfigDir);
+        dir = "%\\fosc-output".format(Platform.userConfigDir);
         if (File.exists(dir).not) { File.mkdir(dir) };
         ^dir;
     }
@@ -77,7 +77,7 @@ Fosc {
     a.show;
     -------------------------------------------------------------------------------------------------------- */
     *tuning_ { |ltuning|
-        case 
+        case
         { ltuning.isString } {
             ltuning = ltuning.asSymbol;
             ltuning = FoscTuning.perform(ltuning);
@@ -96,7 +96,7 @@ Fosc {
         };
 
         tuning = ltuning;
-        
+
         FoscPitchManager.tuning = tuning;
     }
 	///////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -196,7 +196,7 @@ Fosc {
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////
     /* --------------------------------------------------------------------------------------------------------
     • lilypond
-    
+
     Formats lilypond string.
 
     Returns string.
@@ -275,7 +275,7 @@ Fosc {
     -------------------------------------------------------------------------------------------------------- */
     show { |paperSize, staffSize, includes|
         var illustrateEnvir, path;
-        
+
         if (this.respondsTo('illustrate').not) {
             ^throw("% does not respond to 'illustrate' and can't be shown.".format(this));
         };
@@ -406,9 +406,9 @@ Fosc {
     -------------------------------------------------------------------------------------------------------- */
     doComponents { |function, type, exclude, doNotIterateGraceContainers=false, graceNotes=false,
         reverse=false|
-        
-        Fosc.prCheckIsIterable(this, thisMethod);        
-        
+
+        Fosc.prCheckIsIterable(this, thisMethod);
+
         FoscIteration(this).components(
             type, exclude, doNotIterateGraceContainers, graceNotes, reverse
         ).do(function);
@@ -590,7 +590,7 @@ Fosc {
     /* --------------------------------------------------------------------------------------------------------
     • selectComponents
 
-    
+
     • Example 1
 
     Select all components
@@ -599,7 +599,7 @@ Fosc {
     b = a.selectComponents;
     b.do { |each| each.cs.postln };
 
-    
+
     • Example 2
 
     Select notes
@@ -608,7 +608,7 @@ Fosc {
     b = a.selectComponents(type: FoscNote);
     b.do { |each| each.str.postln };
 
-    
+
     • Example 3
 
     Select notes and rests
@@ -617,7 +617,7 @@ Fosc {
     b = a.selectComponents(type: [FoscNote, FoscRest]);
     b.do { |each| each.str.postln };
 
-    
+
     • Example 4
 
     Select notes and rests in reverse order
@@ -798,10 +798,10 @@ Fosc {
     -------------------------------------------------------------------------------------------------------- */
     *prCheckIsIterable { |object, method|
         var type, isIterable;
-        
+
         type = [FoscComponent, FoscSelection, SequenceableCollection];
         isIterable = type.any { |type| object.isKindOf(type) };
-        
+
         if (isIterable.not) {
             ^throw("%: receiver is not iterable: %.".format(method.name, object));
         };

@@ -69,17 +69,17 @@ FoscWriteManager : Fosc {
         } {
             illustration = client.performWithEnvir('illustrate', illustrateEnvir).lilypond;
         };
-        
+
         if (path.isNil) {
             lyFileName = FoscIOManager.nextOutputFileName;
-            path = "%/%".format(Fosc.outputDirectory, lyFileName);
+			path = Fosc.outputDirectory ++ "\\" ++ lyFileName;
         };
 
         if (path.splitext[1].isNil) { path = path ++ ".ly" };
         lyFile = File(path, "w");
         lyFile.write(illustration);
         lyFile.close;
-        
+
         ^path;
     }
     /* --------------------------------------------------------------------------------------------------------
@@ -96,7 +96,7 @@ FoscWriteManager : Fosc {
     Autogenerates file path when 'path' is nil.
 
     Returns output path.
-    
+
 
 
     • Example 1
@@ -125,19 +125,19 @@ FoscWriteManager : Fosc {
     b = a.write.asPDF(Platform.userHomeDir ++ "/foo");
     openOS(b);
     -------------------------------------------------------------------------------------------------------- */
-    asPDF { |path, flags, illustrateEnvir, clean=false|  
+    asPDF { |path, flags, illustrateEnvir, clean=false|
         var lyPath;
 
         if (path.notNil) { path = path.splitext[0] ++ ".ly" };
         lyPath = this.asLY(path, illustrateEnvir);
         path = lyPath.splitext[0];
         FoscIOManager.runLilypond(lyPath, flags, path, clean: clean);
-        
+
         ^(path ++ ".pdf");
     }
     /* --------------------------------------------------------------------------------------------------------
     • asPNG
-    
+
     Writes client as cropped PNG file.
 
     Autogenerates file path when 'path' is nil.
@@ -173,22 +173,22 @@ FoscWriteManager : Fosc {
     -------------------------------------------------------------------------------------------------------- */
     asPNG { |path, resolution=300, illustrateEnvir, clean=false|
         var lyPath, flags, files;
-        
+
         if (illustrateEnvir.isNil) { assert(client.respondsTo('illustrate')) };
         if (path.notNil) { path = path.splitext[0] ++ ".ly" };
         lyPath = this.asLY(path, illustrateEnvir);
         path = lyPath.splitext[0];
         flags = "-dbackend=eps -dresolution=% -dno-gs-load-fonts -dinclude-eps-fonts --png";
         flags = flags.format(resolution);
-        FoscIOManager.runLilypond(lyPath, flags, path, clean: clean);  
+        FoscIOManager.runLilypond(lyPath, flags, path, clean: clean);
         files = #["%-1.eps", "%-systems.count", "%-systems.tex", "%-systems.texi"];
         files.do { |each| File.delete(each.format(path)) };
-        
+
         ^(path ++ ".png");
     }
     /* --------------------------------------------------------------------------------------------------------
     • asSVG
-    
+
     Writes client as SVG file.
 
     Autogenerates file path when 'path' is nil.
@@ -222,7 +222,7 @@ FoscWriteManager : Fosc {
     b = a.write.asSVG(Platform.userHomeDir ++ "/foo");
     openOS(b);
     -------------------------------------------------------------------------------------------------------- */
-    asSVG { |path, illustrateEnvir, clean=false|        
+    asSVG { |path, illustrateEnvir, clean=false|
         var lyPath;
 
         if (illustrateEnvir.isNil) { assert(client.respondsTo('illustrate')) };
