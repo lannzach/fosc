@@ -4,7 +4,7 @@
 !!!TODO: Deprecate. All methods have been moved to Fosc.
 ------------------------------------------------------------------------------------------------------------ */
 FoscConfiguration {
-    classvar lilypondExecutablePath="lilypond", <tuning;
+    classvar lilypondExecutablePath="C:/Users/Zach/Documents/lilypond-2.24.3/bin/lilypond.exe", <tuning;
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////
     // INIT
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -23,7 +23,7 @@ FoscConfiguration {
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////
     /* --------------------------------------------------------------------------------------------------------
     • *lilypondVersionString
-    
+
 	Fosc.lilypondVersionString;
     -------------------------------------------------------------------------------------------------------- */
     *lilypondVersionString {
@@ -65,13 +65,13 @@ FoscConfiguration {
     • *lilypondExecutablePath
 
     Fosc.lilypondExecutablePath;
-    -------------------------------------------------------------------------------------------------------- */ 
+    -------------------------------------------------------------------------------------------------------- */
     *lilypondExecutablePath {
         if (lilypondExecutablePath.isNil || { File.exists(lilypondExecutablePath).not }) {
             error("Lilypond executable not found at: %.".format(lilypondExecutablePath));
             ^nil;
         } {
-            ^lilypondExecutablePath;  
+            ^lilypondExecutablePath;
         };
     }
     /* --------------------------------------------------------------------------------------------------------
@@ -84,7 +84,7 @@ FoscConfiguration {
     or:
 
     Fosc.lilypondExecutablePath = "/usr/local/bin/lilypond";
-    -------------------------------------------------------------------------------------------------------- */ 
+    -------------------------------------------------------------------------------------------------------- */
     *lilypondExecutablePath_ { |path|
         lilypondExecutablePath = path;
     }
